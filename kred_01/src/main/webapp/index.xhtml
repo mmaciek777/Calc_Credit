@@ -6,28 +6,52 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
 	
 	>
 <h:head>
-	<title>Kredyt</title>
+	<title>Kalkulator Kredytowy</title>
 </h:head>
 <h:body>
 
-	<h1>Kredyt</h1>
+<p:panel header="Wyliczanie składki kredytowej - Kalkulator Kredytowy" style="margin: 1em auto;" toggleable="true" closable="true" toggleSpeed="300">
 
-	<h:form id="bla">
-  		Podaj wartość kredytu: <h:inputText value="#{kredytBB.kred}" />
-		<br />
-  		Podaj oprocentowanie: <h:inputText value="#{kredytBB.opr}" />
-		<br />
-		Podaj ilość lat: <h:inputText value="#{kredytBB.lata}" />
-		<br />
-		<h:messages id="msg" />
-		<br />
-		<h:commandButton value="Oblicz" action="#{kredytBB.calc()}"/>
-		<br />
+  <h:form id="bla">
+	
+	<h:panelGrid id="grid" columns="3" cellpadding="5">
+	
+  		<p:outputLabel for="kred" value="Podaj wartość kredytu: "/> 
+	  	<p:inputText id="kred" value="#{kredytBB.kred}" required="true" requiredMessage="Nie podano wysokości kredytu!"/>
+	  	<p:message for="kred"/>
 		
-		</h:form>
+		<p:outputLabel for="opr" value="Podaj oprocentowanie: "/> 
+	  	<p:inputText id="opr" value="#{kredytBB.opr}" required="true" requiredMessage="Nie podano oprocentowania!"/>
+	  	<p:message for="opr"/>
+	  	
+	  	<p:outputLabel for="lata" value="Podaj ilość lat: "/> 
+	  	<p:inputText id="lata" value="#{kredytBB.lata}" required="true" requiredMessage="Nie podano lat!"/>
+	  	<p:message for="lata"/>
+		
+		<!-- Pierwsza opcja -->
+		
+	        <p:menuButton value="Oblicz">
+	            <p:menuitem value="Oblicz (Non-Ajax)" action="#{kredytBB.calc()}" update="@form"/>
+	            <p:divider/>
+	            <p:menuitem value="Oblicz (Ajax)" action="#{kredytBB.calc_AJAX()}" update="msg"/>
+	        </p:menuButton>
+		
+		<!-- Druga opcja -->
+		
+		<p:commandButton value="Oblicz" action="#{kredytBB.calc()}" update="@form"/>
+		<p:commandButton value="Oblicz (AJAX)" action="#{kredytBB.calc_AJAX()}" update="msg"/>
+		 
+	</h:panelGrid>
+		
+		<p:growl id="msg" life="7000"/>
+		
+  </h:form>
 
+</p:panel>
+  		
 </h:body>
 </html>

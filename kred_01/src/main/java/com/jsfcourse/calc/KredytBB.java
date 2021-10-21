@@ -81,5 +81,11 @@ public class KredytBB {
 			}
 			return null;
 		}
+		public String calc_AJAX() {
+			if (ObliczKredyt()) {
+				ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Miesiêczna rata kredytu wynosi: " + result + " z³", null));
+			}
+			return null;
+		}
 	
 }
