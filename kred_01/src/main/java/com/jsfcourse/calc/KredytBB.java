@@ -12,53 +12,47 @@ import javax.faces.context.FacesContext;
 @RequestScoped
 //@SessionScoped
 public class KredytBB {
-	private String kred;
-	private String opr;
-	private String lata;
-	private Double result;
+	private Double kred, opr, result;
+	private Integer lata;
 
 	@Inject
-	FacesContext ctx;	//Dependency Injection(Wstrzyknij obiekt, który chce)
+	FacesContext ctx;	//Dependency Injection(Wstrzyknij obiekt, ktï¿½ry chce)
 	
-	public String getKred() {
-		return kred;
-	}
-
-	public void setKred(String kred) {
+	public Double getKred() { return (kred); }
+	public void setKred(Double kred) {
 		this.kred = kred;
 	}
 
-	public String getOpr() {
-		return opr;
-	}
 
-	public void setOpr(String opr) {
+	public Double getOpr() { return (opr); }
+	public void setOpr(Double opr) {
 		this.opr = opr;
 	}
 
-	public String getLata() {
-		return lata;
-	}
 
-	public void setLata(String lata) {
+	public Integer getLata() {return (lata); }
+	public void setLata(Integer lata) {
 		this.lata = lata;
 	}
 
-	public Double getResult() {
-		return result;
-	}
 
+	public Double getResult() { return (result); }
 	public void setResult(Double result) {
 		this.result = result;
 	}
 
 	public boolean ObliczKredyt() {
 		try {
-			double kred = Double.parseDouble(this.kred);
-			double opr = Double.parseDouble(this.opr);
-			double lata = Double.parseDouble(this.lata);
+			double w_kredyt;
+			w_kredyt = this.kred;
 
-			result = kred/(lata*12) + ((kred/(lata*12)) * (opr/100));
+			double oprocentowanie;
+			oprocentowanie = this.opr;
+
+			int i_lat;
+			i_lat = this.lata;
+			
+			result = (w_kredyt / (i_lat * 12)) + ((w_kredyt / (i_lat * 12)) * (oprocentowanie / 100));
 			
 			//($this->form->kwota / (($this->form->lata)*12)) + (($this->form->kwota / (($this->form->lata)*12)) * (($this->form->oprc) / 100));
 
@@ -68,11 +62,12 @@ public class KredytBB {
 		}catch (Exception e) {
 			
 			ctx.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d podczas przetwarzania parametrów!", null));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Blad podczas przetwarzania parametrï¿½w!", null));
 			
 			return false;
 		}
 	}
+	
 	
 	// Go to "showresult" if ok
 		public String calc() {
@@ -83,7 +78,7 @@ public class KredytBB {
 		}
 		public String calc_AJAX() {
 			if (ObliczKredyt()) {
-				ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Miesiêczna rata kredytu wynosi: " + result + " z³", null));
+				ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "MiesiÄ™czna rata kredytu wynosi: " + result + " zÅ‚", null));
 			}
 			return null;
 		}
