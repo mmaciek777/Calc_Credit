@@ -9,67 +9,69 @@
 	xmlns:p="http://primefaces.org/ui"
 	
 	>
-<h:head>
-	<title>Kalkulator Kredytowy</title>
-</h:head>
-<h:body>
+<ui:composition template="/templates/page-template.xhtml">
 
-<p:panel header="Wyliczanie składki kredytowej - Kalkulator Kredytowy" style="margin: 1em auto;" toggleable="true" closable="true" toggleSpeed="300">
-
-  <h:form id="bla">
 	
-	<h:panelGrid id="grid" columns="3" cellpadding="5">
-	
-  		<p:outputLabel for="kred" value="Podaj wartość kredytu: (zł)"/> 
-	  	<p:inputText id="kred" value="#{kredytBB.kred}" 
-	  				required="true" 
-	  				requiredMessage="Nie podano wartości kredytu!"
-	  				converterMessage="Wysokość kredytu musi być liczbowa!"
-	  				validatorMessage="Wysokość kredytu musi być z przedziału 1.000zł-1.000.000zł!">
-	  		<f:validateDoubleRange minimum="1000.00" maximum="1000000.00"/>
-	  	</p:inputText>
-	  	<p:message for="kred"/>
-		
-		<p:outputLabel for="opr" value="Podaj oprocentowanie: (%)"/> 
-	  	<p:inputText id="opr" value="#{kredytBB.opr}" 
-	  				required="true" 
-	  				requiredMessage="Nie podano oprocentowania!"
-	  				converterMessage="Podane oprocentowanie musi być liczbowe!"
-	  				validatorMessage="Oprocentowanie musi być z przedziału 0,5%-8,5%!">
-	  		<f:validateDoubleRange minimum="0.5" maximum="8.5"/>
-	  	</p:inputText>
-	  	<p:message for="opr"/>
-	  	
-	  	<p:outputLabel for="lata" value="Podaj ilość lat: "/> 
-	  	<p:inputText id="lata" value="#{kredytBB.lata}" 
-	  				required="true" 
-	  				requiredMessage="Nie podano lat!"
-	  				converterMessage="Długość kredytu musi być podana jako liczba całkowita!"
-	  				validatorMessage="Ilość lat musi być z przedziału 2-30!">
-	  		<f:validateLongRange minimum="2" maximum="30"/>
-	  	</p:inputText>
-	  	<p:message for="lata"/>
-		
-		<!-- Pierwsza opcja -->
-		
-	        <p:menuButton value="Oblicz">
-	            <p:menuitem value="Oblicz (Non-Ajax)" action="#{kredytBB.calc()}" update="@form"/>
-	            <p:divider/>
-	            <p:menuitem value="Oblicz (Ajax)" action="#{kredytBB.calc_AJAX()}" update="msg"/>
-	        </p:menuButton>
-		
-		<!-- Druga opcja -->
-		
-		<p:commandButton value="Oblicz" action="#{kredytBB.calc()}" update="@form"/>
-		<p:commandButton value="Oblicz (AJAX)" action="#{kredytBB.calc_AJAX()}" update="msg"/>
-		 
-	</h:panelGrid>
-		
-		<p:growl id="msg" life="7000"/>
-		
-  </h:form>
+	<ui:define name="pageContent">
 
-</p:panel>
-  		
-</h:body>
+		<p:panel header="Wyliczanie składki kredytowej - Kalkulator Kredytowy " style="margin: 1em auto;" toggleable="true" closable="true" toggleSpeed="300">
+	
+		  <h:form>
+		  
+			<p:growl id="msg" life="5000"/>
+				
+				<h:panelGrid id="grid" columns="3" cellpadding="6">
+				
+			  		<p:outputLabel for="kred" value="Podaj wartość kredytu: (zł)"/> 
+				  	<p:inputText id="kred" value="#{kredytBB.kred}" 
+				  				required="true" 
+				  				requiredMessage="Nie podano wartości kredytu!"
+				  				converterMessage="Wysokość kredytu musi być liczbowa!"
+				  				validatorMessage="Wysokość kredytu musi być z przedziału 1.000zł-1.000.000zł!">
+				  		<f:validateDoubleRange minimum="1000.00" maximum="1000000.00"/>
+				  	</p:inputText>
+				  	<p:message for="kred"/>
+					
+					<p:outputLabel for="opr" value="Podaj oprocentowanie: (%)"/> 
+				  	<p:inputText id="opr" value="#{kredytBB.opr}" 
+				  				required="true" 
+				  				requiredMessage="Nie podano oprocentowania!"
+				  				converterMessage="Podane oprocentowanie musi być liczbowe!"
+				  				validatorMessage="Oprocentowanie musi być z przedziału 0,5%-8,5%!">
+				  		<f:validateDoubleRange minimum="0.5" maximum="8.5"/>
+				  	</p:inputText>
+				  	<p:message for="opr"/>
+				  	
+				  	<p:outputLabel for="lata" value="Podaj ilość lat: "/> 
+				  	<p:inputText id="lata" value="#{kredytBB.lata}" 
+				  				required="true" 
+				  				requiredMessage="Nie podano lat!"
+				  				converterMessage="Długość kredytu musi być podana jako liczba całkowita!"
+				  				validatorMessage="Ilość lat musi być z przedziału 2-30!">
+				  		<f:validateLongRange minimum="2" maximum="30"/>
+				  	</p:inputText>
+				  	<p:message for="lata"/>
+				  	
+				     <!--  <p:menuButton value="Oblicz" style="margin-left:-13em; margin-top:1em;">
+				       		 <p:menuitem value="Oblicz (Non-Ajax)" action="#{kredytBB.calc()}" update="@form"/> 
+				             <p:divider/>
+				        	 <p:menuitem value="Oblicz (Ajax)" action="#{kredytBB.calc_AJAX()}" update="msg"/>
+				      </p:menuButton>
+				       -->
+				       
+					<p:commandButton value="Oblicz (Non-Ajax)" action="#{kredytBB.calc()}" update="@form"/> 
+					<p:commandButton value="Oblicz (Ajax)" action="#{kredytBB.calc_AJAX()}" update="msg"/> 
+					
+			     </h:panelGrid>
+					
+		  </h:form>
+		  		<h:form>
+			  		<p:commandButton value="Informacje" action="#{kredytBB.info()}" style=" margin-top:1em;"/>
+				</h:form>
+		</p:panel>
+  				
+	</ui:define>
+
+
+</ui:composition>
 </html>

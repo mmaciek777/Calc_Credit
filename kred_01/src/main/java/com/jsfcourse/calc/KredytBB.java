@@ -82,5 +82,9 @@ public class KredytBB {
 			}
 			return null;
 		}
+		
+		public String info() {
+			return "info"; 
+		}
 	
 }
